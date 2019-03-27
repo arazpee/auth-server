@@ -4,11 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "NODE_ENV=development nodemon index.js"
+    "start": "node src/index.js",
+    "dev": "NODE_ENV=development nodemon src/index.js",
+    "test": "NODE_ENV=development jest --watch --runInBand"
   },
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "bcrypt-nodejs": "*",
@@ -22,5 +21,8 @@
     "passport": "*",
     "passport-jwt": "*",
     "passport-local": "*"
+  },
+  "devDependencies": {
+    "jest": "^24.5.0"
   }
 }
