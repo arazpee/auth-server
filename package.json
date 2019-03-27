@@ -8,6 +8,10 @@
     "dev": "NODE_ENV=development nodemon src/index.js",
     "test": "NODE_ENV=development jest --watch --runInBand"
   },
+  "jest": {
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": ["/node_modules/", "/helper/"]
+  },
   "license": "ISC",
   "dependencies": {
     "bcrypt-nodejs": "*",
@@ -23,6 +27,7 @@
     "passport-local": "*"
   },
   "devDependencies": {
-    "jest": "^24.5.0"
+    "jest": "^24.5.0",
+    "supertest": "^4.0.2"
   }
 }
