@@ -12,7 +12,7 @@ const userId1 = new mongoose.Types.ObjectId()
 const user1 = {
     _id: userId1,
     email: 'mike@example.com',
-    password: '1234!',
+    password: '1234567!',
 }
 
 const beforeEach = async () => {

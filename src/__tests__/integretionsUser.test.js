@@ -11,7 +11,7 @@ describe('sign up', () => {
     const response = await request(app).post('/signup')
       .send({
         email: 'pee@gmail.com',
-        password: '1234!!'
+        password: '1234asds!!'
       })
       expect(201);
 
@@ -37,7 +37,7 @@ describe('handle user', () => {
     const response = await request(app).get("/signin")
       .send({
         email: 'mike@example.com',
-        password: '1234!'
+        password: '1234567!'
       })
       expect(200);
 

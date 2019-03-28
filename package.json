@@ -10,7 +10,10 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "testPathIgnorePatterns": ["/node_modules/", "/helper/"]
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/helper/"
+    ]
   },
   "license": "ISC",
   "dependencies": {
@@ -24,7 +27,8 @@
     "nodemon": "*",
     "passport": "*",
     "passport-jwt": "*",
-    "passport-local": "*"
+    "passport-local": "*",
+    "validator": "^10.11.0"
   },
   "devDependencies": {
     "jest": "^24.5.0",
