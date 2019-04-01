@@ -10,7 +10,7 @@ const requireSignin = passport.authenticate('local', { session: false });
 
 function tokenForUser(user) {
   const timestamp = new Date().getTime();
-  return jwt.encode({ sub: user._id, iat: timestamp }, config.secret);
+  return jwt.encode({ id: user.id, iat: timestamp }, config.secret);
 }
 
 const router = function(app) {
