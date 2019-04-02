@@ -13,6 +13,7 @@ mongoose.connect(config.mongoURL);
 app.use(morgan('combined'));
 app.use(cors());
 app.use(bodyParser.json());
+require('./services/passport');
 authRouter(app);
 movieRouter(app);
 

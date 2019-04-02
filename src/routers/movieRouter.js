@@ -1,7 +1,9 @@
+const passport = require('passport');
 const Movie = require('../models/movie');
+const requireAuth = require('../middlewares/authMiddleware');
 
 const router = function(app) {
-  app.post('/movies', async (req, res) => {
+  app.post('/movies', requireAuth, async (req, res) => {
     const data = new Movie({
       name: req.body.name
     }).save();
@@ -14,7 +16,7 @@ const router = function(app) {
     res.send(movie);
   });
 
-  app.delete('/movies/:id', async (req, res) => {
+  app.delete('/movies/:id', requireAuth, async (req, res) => {
     try {
       await Movie.findOneAndDelete({ _id: req.params.id });
       res.status(200).send();
@@ -23,17 +25,15 @@ const router = function(app) {
     }
   });
 
-  app.patch('/movies/:id', async (req, res) => {
+  app.patch('/movies/:id', requireAuth, async (req, res) => {
     try {
-      console.log(req.body.name);
-
       const data = await Movie.findByIdAndUpdate(req.params.id, {
         name: req.body.name
       });
       if (!data) {
         res.status(400).send("bad request");
       }
-      
+
       res.status(200).send(data);
     } catch(e) {
       res.status(400).send(e);

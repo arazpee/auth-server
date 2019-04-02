@@ -3,17 +3,14 @@ const User = require('../../models/user');
 const Movie = require('../../models/movie');
 const jwt = require('jwt-simple');
 const config = require('../../config');
-
-function tokenForUser(user) {
-  const timestamp = new Date().getTime();
-  return jwt.encode({ sub: user._id, iat: timestamp }, config.secret);
-}
+const createToken = require('../../helper/createToken');
 
 const userId1 = new mongoose.Types.ObjectId();
 const user1 = {
   _id: userId1,
   email: 'mike@example.com',
   password: '1234567!',
+  tokens: [createToken(userId1)]
 };
 
 const movieId1 = new mongoose.Types.ObjectId();

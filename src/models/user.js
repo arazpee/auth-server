@@ -21,7 +21,11 @@ const userSchema = new Schema({
     required: true,
     minlength: 7,
     trim: true,
-  }
+  },
+  tokens: [{
+    type: String,
+    required: true
+  }]
 });
 
 userSchema.pre('save', function(next) {

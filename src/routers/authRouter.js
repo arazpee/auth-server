@@ -1,25 +1,20 @@
 const passport = require('passport');
-const jwt = require('jwt-simple');
 const User = require('../models/user');
-const config = require('../config');
+const createToken = require('../helper/createToken');
+const requireAuth = require('../middlewares/authMiddleware');
 
-require('../services/passport');
-
-const requireAuth = passport.authenticate('jwt', { session: false });
 const requireSignin = passport.authenticate('local', { session: false });
-
-function tokenForUser(user) {
-  const timestamp = new Date().getTime();
-  return jwt.encode({ id: user.id, iat: timestamp }, config.secret);
-}
 
 const router = function(app) {
   app.get('/secret', requireAuth, function(req, res) {
     res.send({ hi: 'there' });
   });
 
-  app.post('/signin', requireSignin, function(req, res, next) {
-    res.status(200).send({ token: tokenForUser(req.user) });
+  app.post('/signin', requireSignin, async function(req, res, next) {
+    const token = createToken(req.user.id);
+    req.user.tokens.push(token);
+    const data = await req.user.save();
+    res.status(200).send({ token: token });
   });
 
   app.post('/signup', function(req, res, next) {
@@ -34,18 +29,19 @@ const router = function(app) {
       if (err) { return next(err); }
 
       if (existingUser) {
-        return res.status(400).send({ error: 'Email is in use' });
+        return res.status(409).send({ error: 'Email is in use' });
       }
 
       const user = new User({
         email: email,
         password: password
       });
+      user.tokens.push(createToken(user.id));
 
-      user.save(function(err) {
+      user.save(function(err, result) {
         if (err) { return next(err); }
 
-        res.status(201).json({ token: tokenForUser(user) });
+        res.status(201).send({ user: user });
       });
     });
   });
